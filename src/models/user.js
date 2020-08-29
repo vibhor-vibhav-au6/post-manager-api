@@ -50,6 +50,12 @@ userSchema.virtual('Posts', {
     foreignField: 'author'
 })
 
+userSchema.virtual('Likes', {
+    ref: 'Like',
+    localField: '_id',
+    foreignField: 'author'
+})
+
 userSchema.methods.toJSON = function () {
     const user = this
     const userObject = user.toObject()

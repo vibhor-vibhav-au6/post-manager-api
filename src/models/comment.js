@@ -1,7 +1,11 @@
 const mongoose = require('mongoose')
 
 const commentSchema = new mongoose.Schema({
-
+    description: {
+        type: String,
+        required: true,
+        trim: true
+    },
     post: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
@@ -11,7 +15,11 @@ const commentSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'User'
-    }
+    },
+    like: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }]
 }, {
     timestamps: true
 })
