@@ -1,6 +1,7 @@
 const express = require('express')
 const User = require('../models/user')
 const auth = require('../middleware/auth')
+const { findById } = require('../models/user')
 const router = new express.Router()
 
 router.post('/users/signup', async (req, res) => {
@@ -52,6 +53,17 @@ router.get('/users/me', auth, async (req, res) => {
     res.send(req.user)
 })
 
+router.get('/user/:id', async (req, res) => {
+    try {
+        const user = await User.findById({_id: req.params.id});
+        if (!user) {
+            res.status(404).send();
+        }
+        res.send({name:user.name, _id: req.params.id})
+    } catch (e) {
+        res.status(500).send(e.message)
+    }
+})
 // router.patch('/users/me', auth, async (req, res) => {
 //     const updates = Object.keys(req.body)
 //     const allowedUpdates = ['name', 'email', 'password', 'age']
